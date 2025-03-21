@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie de Photos Interactive</title>
+    <style>
+        #grandeImage {
+            width: 500px;
+            height: 300px;
+            background-size: cover;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .petiteImage {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="grandeImage" aria-label="Image principale"></div>
+    <div>
+        <img src="images/b.jpg" alt="Une planète imaginaire" class="petiteImage">
+        <img src="images/d.jpg" alt="Saturne" class="petiteImage">
+        <img src="images/k.jpg" alt="Modeliste" class="petiteImage">
+        <img src="images/l.jpg" alt="La clé du bonheur" class="petiteImage">
+        <img src="images/m.jpg" alt="Messi le GOAT" class="petiteImage">
+        <img src="images/t.jpg" alt="Ninja" class="petiteImage">
+    </div>
+
+    <script>
+        const grandeImage = document.getElementById('grandeImage');
+        const petitesImages = document.querySelectorAll('.petiteImage');
+        const texteOriginal = "Texte original de la grande image";
+
+        petitesImages.forEach((image, index) => {
+            image.setAttribute('tabindex', '0'); // Ajout de l'attribut tabindex
+
+            image.onmouseover = function() {
+                grandeImage.style.backgroundImage = `url(${image.src})`;
+                grandeImage.setAttribute('aria-label', image.alt);
+            };
+
+            image.onmouseleave = function() {
+                grandeImage.style.backgroundImage = '';
+                grandeImage.setAttribute('aria-label', texteOriginal);
+            };
+
+            image.onfocus = function() {
+                grandeImage.style.backgroundImage = `url(${image.src})`;
+                grandeImage.setAttribute('aria-label', image.alt);
+                console.log(`Focus sur l'image : ${image.alt}`);
+            };
+
+            image.onblur = function() {
+                grandeImage.style.backgroundImage = '';
+                grandeImage.setAttribute('aria-label', texteOriginal);
+                console.log(`Blur sur l'image : ${image.alt}`);
+            };
+        });
+
+        window.onload = function() {
+            petitesImages.forEach((image) => {
+                image.tabIndex = 0; // Assurez-vous que tabindex est ajouté
+            });
+            console.log("Page chargée et tabindex ajouté");
+        };
+    </script>
+
+</body>
+</html>
